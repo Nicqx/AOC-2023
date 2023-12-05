@@ -5,16 +5,11 @@ from Utilities.read_file_to_string_array import read_to_array
 
 class Day3:
     arr = []
-<<<<<<< HEAD
     points = []
-=======
-    mat = []
->>>>>>> origin/main
 
     def __init__(self, file):
         self.arr.clear()
         self.arr = read_to_array(file)
-<<<<<<< HEAD
 
     def task1(self):
         result = 0
@@ -31,12 +26,6 @@ class Day3:
         mo = re.findall(r'\d+', validated_numbers)
         for item in mo:
             result += int(item)
-=======
-        self.mat = self.convert_array_to_matrix(self.arr)
-
-    def task1(self):
-        result = 0
->>>>>>> origin/main
 
         return str(result)
 
@@ -45,7 +34,6 @@ class Day3:
 
         return str(result)
 
-<<<<<<< HEAD
     def activate_number(self, x, y):
         if self.get_point(x, y).get_keep() and self.get_point(x, y).get_type() == "number":
             if x > 0:
@@ -178,15 +166,3 @@ class Point:
 
     def set_keep(self):
         self.keep = True
-=======
-    @staticmethod
-    def convert_array_to_matrix(arr):
-        result = []
-        for item in arr:
-            result.append(list(item))
-        return result
-
-    class Point:
-        type = "" # point, number, symbol
-        checked = False
->>>>>>> origin/main

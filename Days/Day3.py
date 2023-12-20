@@ -5,7 +5,7 @@ from Utilities.read_file_to_string_array import read_to_array
 
 class Day3:
     arr = []
-    points = []
+    points = {}
 
     def __init__(self, file):
         self.arr.clear()
@@ -82,10 +82,10 @@ class Day3:
     def get_string_from_valid_numbers(self):
         result = ""
         x = 0
-        for element in self.points:
+        for element in self.points.keys():
             x += 1
-            if element.get_type() == "number" and element.get_keep():
-                result = result + element.get_value()
+            if self.points[element].get_type() == "number" and self.points[element].get_keep():
+                result = result + self.points[element].get_value()
             else:
                 result = result + "."
             if x % len(self.arr[0]) == 0:
@@ -96,7 +96,7 @@ class Day3:
 
         for i in range(len(self.arr)):
             for j in range(len(self.arr[i])):
-                self.points.append(Point(j, i, self.arr[i][j]))
+                self.points[(j, i)] = self.Point(j, i, self.arr[i][j])
 
     def check_neigh(self, x, y):
         if x > 0:
@@ -125,44 +125,44 @@ class Day3:
                 return True
 
     def get_point(self, x, y):
-        for item in self.points:
-            if item.get_coord() == (x, y):
-                return item
+        return self.points[(x, y)]
+        # for item in self.points:
+        #     if item.get_coord() == (x, y):
+        #         return item
 
+    class Point:
+        type = ""  # point, number, symbol
+        keep = False
+        coord = ()
+        value = ""
 
-class Point:
-    type = ""  # point, number, symbol
-    keep = False
-    coord = ()
-    value = ""
+        def __init__(self, x, y, t):
+            self.coord = ()
+            self.type = ""
+            self.keep = False
+            self.value = ""
+            self.coord = (x, y)
+            mo = re.match(r'\d', t)
+            mo2 = re.match(r'\.', t)
+            if mo:
+                self.type = "number"
+                self.value = t
+            elif mo2:
+                self.type = "point"
+            else:
+                self.type = "symbol"
 
-    def __init__(self, x, y, t):
-        self.coord = ()
-        self.type = ""
-        self.keep = False
-        self.value = ""
-        self.coord = (x, y)
-        mo = re.match(r'\d', t)
-        mo2 = re.match(r'\.', t)
-        if mo:
-            self.type = "number"
-            self.value = t
-        elif mo2:
-            self.type = "point"
-        else:
-            self.type = "symbol"
+        def get_type(self):
+            return self.type
 
-    def get_type(self):
-        return self.type
+        def get_coord(self):
+            return self.coord
 
-    def get_coord(self):
-        return self.coord
+        def get_value(self):
+            return self.value
 
-    def get_value(self):
-        return self.value
+        def get_keep(self):
+            return self.keep
 
-    def get_keep(self):
-        return self.keep
-
-    def set_keep(self):
-        self.keep = True
+        def set_keep(self):
+            self.keep = True
